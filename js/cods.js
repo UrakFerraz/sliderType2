@@ -6,6 +6,9 @@ var actualSlide = 0;
 var slideCont;
 var quantSlides = container.children.length;
 var voltar = false;
+var automate;
+var automation;
+var interval = 3000;
 
 
 function slidesLoop() {
@@ -60,9 +63,19 @@ function slidesReverse() {
 	};
 };
 
+automate = function() {
+	slidesForward();
+}
 
-setInterval(slidesForward, 4000);
-
+automation = setInterval(automate, interval);
 
 btnLeft.addEventListener('click', slidesReverse);
 btnRight.addEventListener('click', slidesForward);
+
+container.addEventListener('mouseover', function() {
+	 clearInterval(automation);
+});
+
+container.addEventListener('mouseleave', function() {
+	automation = setInterval(automate, interval);
+});
